@@ -6,6 +6,7 @@ public class ShapeCollector {
 
     public ArrayList<Shape> shapes = new ArrayList<>();
     public String result;
+    public String figures="Figures: ";
 
     public void addFigure(Shape shape){
         shapes.add(shape);
@@ -25,9 +26,10 @@ public class ShapeCollector {
 
     public String showFigures() {
         for (Shape show : shapes) {
-            result = show.getShapeName() + " " + show.getField();
+           result = show.getShapeName() + " " + show.getField() + " ";
+           figures+=result;
         }
-        return result;
+        return figures;
     }
 
 

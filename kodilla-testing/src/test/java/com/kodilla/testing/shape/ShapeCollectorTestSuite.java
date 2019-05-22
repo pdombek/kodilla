@@ -44,11 +44,14 @@ public class ShapeCollectorTestSuite {
     public void testShowFigures(){
         //given
         Shape shape = new Square(2);
+        Shape shape2 = new Triangle(3,6);
         ShapeCollector shapesList = new ShapeCollector();
+        String expectedFigures = "Figures: " + shape.getShapeName() + " " + shape.getField() + " " + shape2.getShapeName() + " " + shape2.getField() + " ";
         //when
         shapesList.addFigure(shape);
+        shapesList.addFigure(shape2);
         String list = shapesList.showFigures();
         //than
-        Assert.assertEquals(list, "Square 4.0");
+        Assert.assertEquals(list, expectedFigures);
     }
 }
