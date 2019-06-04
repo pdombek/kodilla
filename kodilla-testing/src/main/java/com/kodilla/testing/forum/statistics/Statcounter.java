@@ -19,14 +19,14 @@ public class Statcounter {
             avUsersPost = 0;
             avUsersComments = 0;
         } else {
-            avUsersPost = postsNumber/usersNumber;
-            avUsersComments = commentsNumber/usersNumber;
+            avUsersPost = (double)postsNumber/(double)usersNumber;
+            avUsersComments = (double)commentsNumber/(double)usersNumber;
         }
 
         if(postsNumber == 0) {
             avPostsComments = 0;
         } else {
-            avPostsComments = commentsNumber/postsNumber;
+            avPostsComments = (double)commentsNumber/(double)postsNumber;
         }
 
     }
