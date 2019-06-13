@@ -1,37 +1,26 @@
 package com.kodilla.stream;
 
-import java.util.*;
-import java.lang.*;
+import com.kodilla.stream.forumuser.Forum;
+import com.kodilla.stream.forumuser.ForumUser;
 
-import com.kodilla.stream.beautifier.PoemBeautifier;
-import com.kodilla.stream.iterate.NumbersGenerator;
-import com.kodilla.stream.lambda.ExpressionExecutor;
-import com.kodilla.stream.reference.FunctionalCalculator;
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StreamMain {
     public static void main(String[] args) {
-        ExpressionExecutor expressionExecutor = new ExpressionExecutor();
-        PoemBeautifier poemBeautifier = new PoemBeautifier();
+        Forum theForum = new Forum();
 
-        System.out.println("Calculating expressions with lambdas");
-        expressionExecutor.executeExpression(10, 5, (a, b) -> a + b);
-        expressionExecutor.executeExpression(10, 5, (a, b) -> a - b);
-        expressionExecutor.executeExpression(10, 5, (a, b) -> a * b);
-        expressionExecutor.executeExpression(10, 5, (a, b) -> a / b);
 
-        System.out.println("Calculating expressions with method references");
-        expressionExecutor.executeExpression(3, 4, FunctionalCalculator::multiplyAByB);
-        expressionExecutor.executeExpression(3, 4, FunctionalCalculator::addAToB);
-        expressionExecutor.executeExpression(3, 4, FunctionalCalculator::subBFromA);
-        expressionExecutor.executeExpression(3, 4, FunctionalCalculator::divideAByB);
+        Map<Integer, ForumUser> filteredUsers = theForum.getUserList().stream()
+                .filter(forumUser -> forumUser.getUserSex() == 'M')
+                .filter(forumUser -> LocalDate.now().getYear() - forumUser.getUserBirthDate().getYear() >= 20)
+                .filter(forumUser -> forumUser.getUserPostsCount() >= 1)
+                .collect(Collectors.toMap(ForumUser::getUserId, forumUser -> forumUser));
 
-        System.out.println("Making text more beautiful");
-        poemBeautifier.beautify("Testujemy", (text) -> text.toUpperCase());
-        poemBeautifier.beautify("Testujemy", (text) -> "ABC" + text + "ABC");
-        poemBeautifier.beautify("Testujemy", (text) -> text.toLowerCase());
-        poemBeautifier.beautify("Testujemy", (text) -> text.replaceAll(text,"PIĘKNIEJSZY"));
-
-        System.out.println("Using Stream to generate even numbers from 1 to 20");
-        NumbersGenerator.generateEven(20);
+        System.out.println("# elements: " + filteredUsers.size());
+        filteredUsers.entrySet().stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .forEach(System.out::println);
     }
 }
